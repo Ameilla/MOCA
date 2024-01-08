@@ -34,9 +34,10 @@ class All_Profiles: UIViewController{
         }
 
     @IBAction func back(_ sender: Any) {
-        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.popViewController(animated: true)
+//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     override func viewWillAppear(_ animated: Bool) {
         getDashAPI()

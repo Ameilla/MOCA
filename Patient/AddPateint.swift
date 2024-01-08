@@ -91,9 +91,10 @@ class AddPateint: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     @IBAction func backbtn(_ sender: Any) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.popViewController(animated: true)
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     @IBAction func AddPatientbtn(_ sender: Any) {

@@ -24,19 +24,49 @@ class ViewPatientDetails: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         PostAPI()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mriViewTapped))
+            mri_before.isUserInteractionEnabled = true
+            mri_before.addGestureRecognizer(tapGestureRecognizer)
+        
+        let GestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mriAfterViewTapped))
+            mri_after.isUserInteractionEnabled = true
+            mri_after.addGestureRecognizer(GestureRecognizer)
+        
+        
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         PostAPI()
     }
-    
-    @IBOutlet weak var Image2: UIView!
-    @IBAction func Image1(_ sender: Any) {
+
+    @objc func mriViewTapped() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let imageDetailVC = storyboard.instantiateViewController(withIdentifier: "mri_ImageViewVC") as? mri_ImageViewVC {
+            // Pass the MRI image data to the destination view controller here
+            if let imageData = mri_before.image?.pngData() {
+                imageDetailVC.img = UIImage(data: imageData)!
+            }
+            navigationController?.pushViewController(imageDetailVC, animated: true)
+        }
     }
+    @objc func mriAfterViewTapped() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let imageDetailVC = storyboard.instantiateViewController(withIdentifier: "mri_ImageViewVC") as? mri_ImageViewVC {
+            // Pass the MRI image data to the destination view controller here
+            if let imageData = mri_after.image?.pngData() {
+                imageDetailVC.img = UIImage(data: imageData)!
+            }
+            navigationController?.pushViewController(imageDetailVC, animated: true)
+        }
+    }
+    
     @IBAction func backBtn(_ sender: Any) {
-        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "Patient_info") as! Patient_info
-        vc.id=id
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.popViewController(animated: true)
+//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "Patient_info") as! Patient_info
+//        vc.id=id
+//        self.navigationController?.pushViewController(vc, animated: true)
     }   
     
     

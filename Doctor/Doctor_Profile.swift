@@ -31,10 +31,11 @@ class Doctor_Profile: UIViewController {
        
     }
     @IBAction func back(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
         
-        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func editBtn(_ sender: Any) {
         let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)

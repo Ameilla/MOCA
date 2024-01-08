@@ -26,10 +26,6 @@ class Patient_info: UIViewController {
         box.layer.borderWidth = 1.0
         box.layer.borderColor = UIColor.black.cgColor
         box.layer.cornerRadius = 8.0
-        
-        
-       
-    
         PostAPI()
         
     }
@@ -39,10 +35,10 @@ class Patient_info: UIViewController {
     
     @IBAction func backbtn(_ sender: Any) {
         
-//        self.navigationController?.popViewController(animated: true)
-        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.popViewController(animated: true)
+//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
+//        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     @IBAction func detailsBtn(_ sender: Any) {

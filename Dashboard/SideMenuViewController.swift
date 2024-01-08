@@ -52,6 +52,9 @@ class SideMenuViewController: UIViewController {
     }
     
     @IBAction func Topics(_ sender: Any) {
+        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "topics") as! topics
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func About(_ sender: Any) {
     }
