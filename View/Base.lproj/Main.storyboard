@@ -1704,26 +1704,34 @@ of numbers and asked to repeat them forward or backward</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bF2-Fy-hO1">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJx-9h-I95">
-                                <rect key="frame" x="16" y="43" width="75" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJx-9h-I95">
+                                <rect key="frame" x="16" y="43" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="gpo-9u-brm"/>
+                                    <constraint firstAttribute="width" constant="50" id="qbY-Ip-U48"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="left-arrow (1) 1"/>
+                                <buttonConfiguration key="configuration" style="plain" image="left-arrow (1) 1"/>
                                 <connections>
                                     <action selector="backbtn:" destination="gbQ-qs-wEu" eventType="touchUpInside" id="GAD-AJ-xmz"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bF2-Fy-hO1">
+                                <rect key="frame" x="12.5" y="168.5" width="350" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="Dhx-qu-vM5"/>
+                                    <constraint firstAttribute="width" constant="350" id="nDx-du-8df"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aIC-GE-nhc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="eJx-9h-I95" firstAttribute="top" secondItem="aIC-GE-nhc" secondAttribute="top" constant="23" id="RWN-eR-HaS"/>
-                            <constraint firstItem="eJx-9h-I95" firstAttribute="leading" secondItem="aIC-GE-nhc" secondAttribute="leading" constant="16" id="gaR-Ot-QAI"/>
-                            <constraint firstItem="eJx-9h-I95" firstAttribute="width" secondItem="hMc-KU-V6h" secondAttribute="width" multiplier="0.2" id="yUI-qC-FjX"/>
-                            <constraint firstItem="eJx-9h-I95" firstAttribute="height" secondItem="hMc-KU-V6h" secondAttribute="height" multiplier="0.0524738" id="ykn-OD-re8"/>
+                            <constraint firstItem="eJx-9h-I95" firstAttribute="top" secondItem="aIC-GE-nhc" secondAttribute="top" constant="23" id="5DV-Lz-fnY"/>
+                            <constraint firstItem="bF2-Fy-hO1" firstAttribute="centerY" secondItem="aIC-GE-nhc" secondAttribute="centerY" id="DwM-YA-xHG"/>
+                            <constraint firstItem="eJx-9h-I95" firstAttribute="leading" secondItem="aIC-GE-nhc" secondAttribute="leading" constant="16" id="t24-UV-lg7"/>
+                            <constraint firstItem="bF2-Fy-hO1" firstAttribute="centerX" secondItem="aIC-GE-nhc" secondAttribute="centerX" id="yJi-bJ-jg4"/>
                         </constraints>
                     </view>
                     <connections>
