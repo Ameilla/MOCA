@@ -35,7 +35,7 @@ class ques_5: UIViewController {
         bar.layer.cornerRadius = 25
         bar.layer.masksToBounds=true
         nextbar.layer.cornerRadius = 17
-        task3 = task3 + 1
+//        task3 = task3 + 1
         print(id ?? "")
         submit.layer.cornerRadius = 10
         GetAPI()
@@ -56,12 +56,14 @@ class ques_5: UIViewController {
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
-                self.Question = data
-                // Set tags and images for buttons
-                if let questionData = self.Question?.data.first {
-                    
-                    self.type.text = questionData.type
-                    self.quesLabel.text = questionData.ques;                   self.setButtonImage(self.optionButtons[0], withImageData: questionData.option1!)
+                    self.Question = data
+                    // Set tags and images for buttons
+                    if let questionData = self.Question?.data.first {
+                        self.type.text = questionData.type
+                        self.quesLabel.text = questionData.ques
+                        self.correctAnswer = questionData.answer
+                        
+                        self.setButtonImage(self.optionButtons[0], withImageData: questionData.option1!)
                         self.optionButtons[0].tag = 1
                         
                         self.setButtonImage(self.optionButtons[1], withImageData: questionData.option2!)
@@ -87,44 +89,6 @@ class ques_5: UIViewController {
         }
     }
 
-    
-//    func GetAPI() {
-//        let apiURL = APIList.Question5Api
-//        print(apiURL)
-//        
-//        APIHandler().getAPIValues(type: Question5Model.self, apiUrl: apiURL, method: "GET") { result in
-//            switch result {
-//            case .success(let data):
-//                self.Question = data
-//                // Set tags and images for buttons
-//                if let questionData = self.Question?.data.first {
-//                    DispatchQueue.main.async {
-//                        self.setButtonImage(self.optionButtons[0], withImageData: questionData.option1!)
-//                        self.optionButtons[0].tag = 1
-//                        
-//                        self.setButtonImage(self.optionButtons[1], withImageData: questionData.option2!)
-//                        self.optionButtons[1].tag = 2
-//                        
-//                        self.setButtonImage(self.optionButtons[2], withImageData: questionData.option3!)
-//                        self.optionButtons[2].tag = 3
-//                        
-//                        self.setButtonImage(self.optionButtons[3], withImageData: questionData.option4!)
-//                        self.optionButtons[3].tag = 4
-//                    }
-//                }
-//            case .failure(let error):
-//                print(error)
-//                DispatchQueue.main.async {
-//                    let alert = UIAlertController(title: "Warning", message: "Something Went Wrong", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "Ok", style: .destructive) { _ in
-//                        print("API Error")
-//                    })
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//    }
-    
     func setButtonImage(_ button: UIButton, withImageData imageDataString: String) {
         guard let imageData = Data(base64Encoded: imageDataString),
               let originalImage = UIImage(data: imageData) else {
@@ -164,15 +128,12 @@ class ques_5: UIViewController {
 
         return newImage
     }
-
-    
     @IBAction func optionButtonTapped(_ sender: UIButton) {
         // Deselect all buttons
         for button in optionButtons {
             button.isSelected = false
             button.backgroundColor = .clear
         }
-
         // Select the tapped button
         sender.isSelected = true
         sender.backgroundColor = .green
@@ -180,23 +141,20 @@ class ques_5: UIViewController {
         // Store the selected option
         selectedOption = String(sender.tag)
     }
-    
     @IBAction func submit(_ sender: Any) {
         guard let selectedOption = selectedOption, !selectedOption.isEmpty else {
                 print("Please select an option.")
                 return
             }
-        
         // Check if the selected option is correct
         if selectedOption == correctAnswer {
                    print("Correct option selected.")
                    // Increment your task count or perform other actions for a correct answer
-                   task3 += 1
+                   task3=task3+5
                } else {
                    print("Incorrect option selected.")
                    // Handle the case when the selected option is incorrect
                }
-               
                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                let vc = storyBoard.instantiateViewController(withIdentifier: "ques_6") as! ques_6
                vc.id = id

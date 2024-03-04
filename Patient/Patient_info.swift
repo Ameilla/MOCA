@@ -34,12 +34,12 @@ class Patient_info: UIViewController {
     }
     
     @IBAction func backbtn(_ sender: Any) {
-        
-        self.navigationController?.popViewController(animated: true)
-//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
+        for controller in self.navigationController!.viewControllers as Array {
+            if controller.isKind(of: Dashboard.self) {
+                self.navigationController!.popToViewController(controller, animated: true)
+                break
+            }
+        }
     }
     @IBAction func detailsBtn(_ sender: Any) {
         let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
@@ -58,7 +58,7 @@ class Patient_info: UIViewController {
     
     @IBAction func testBtn(_ sender: Any) {
         let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "ques_1") as! ques_1
+        let vc = storyBoard.instantiateViewController(withIdentifier: "LanguageVC") as! LanguageVC
         vc.id=id
         self.navigationController?.pushViewController(vc, animated: true)
         
@@ -67,7 +67,7 @@ class Patient_info: UIViewController {
     func PostAPI() {
         let apiURL = APIList.PatientInfoApi
         print(apiURL)
-
+        
         // Prepare POST parameters if needed
         let parameters: [String: Any] = [
             "num":id ?? "262"
@@ -75,12 +75,12 @@ class Patient_info: UIViewController {
             // "key1": value1,
             // "key2": value2,
         ]
-
+        
         APIHandler().postAPIValues(type: PatientInfoModel.self, apiUrl: apiURL, method: "POST", formData: parameters) { result in
             switch result {
             case .success(let data):
                 self.viewPatientinfo = data
-                print(data)
+                //                print(data)
                 DispatchQueue.main.async {
                     if let patientData = self.viewPatientinfo?.data.first {
                         self.nameLabel.text = patientData.name
@@ -88,7 +88,7 @@ class Patient_info: UIViewController {
                         self.genderLabel.text = patientData.gender
                         self.diagLabel.text = patientData.diagnosis
                         self.drugLabel.text = patientData.drug
-
+                        
                         // Ensure imageDataString is not nil before attempting to decode
                         let imageDataString = patientData.patientImg
                         if let imageData = Data(base64Encoded: imageDataString!),
@@ -115,62 +115,4 @@ class Patient_info: UIViewController {
             }
         }
     }
-
-    
-    
-    
-//    func GetAPI() {
-//        let apiURL = APIList.PatientInfoApi + (id ?? "")
-//        print(apiURL)
-//        
-//        APIHandler().getAPIValues(type: PatientInfoModel.self, apiUrl: apiURL, method: "GET") { result in
-//            switch result {
-//            case .success(let data):
-//                self.viewPatientinfo = data
-//                print(data)
-//                DispatchQueue.main.async {
-//                    if let patientData = self.viewPatientinfo?.data.first {
-//                        self.nameLabel.text = patientData.name
-//                        self.ageLabel.text = patientData.age
-//                        self.genderLabel.text = patientData.gender
-//                        self.diagLabel.text = patientData.diagnosis
-//                        self.drugLabel.text = patientData.drug
-//                        
-//                        // Ensure imageDataString is not nil before attempting to decode
-//                        let imageDataString = patientData.patientImg
-//                        if let imageData = Data(base64Encoded: imageDataString! ),
-//                           let image = UIImage(data: imageData) {
-//                            DispatchQueue.main.async {
-//                                self.profile_image.image = image
-//                                self.profile_image.contentMode = .scaleAspectFit
-//                                   self.profile_image?.clipsToBounds = true
-//                            }
-//                        } else {
-//                            print("Error decoding image data")
-//                        }
-//                        
-//                    }
-//                }
-//            case .failure(let error):
-//                print(error)
-//                DispatchQueue.main.async {
-//                    let alert = UIAlertController(title: "Warning", message: "Something Went Wrong", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "Ok", style: .destructive) { _ in
-//                        print("API Error")
-//                    })
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//    }
-    
 }
-//let imageDataString = patientData.patientImg
-//// Decode base64-encoded image data
-//if let imageData = Data(base64Encoded: imageDataString),
-//   let image = UIImage(data: imageData) {
-//    // Set the image to the UIImageView
-//    self.imageView.image = image
-//} else {
-//    print("Error decoding image data")
-//}

@@ -105,39 +105,7 @@ class ques_9: UIViewController {
             }
         }
     }
-    
-//    func GetAPI() {
-//        let apiURL = APIList.QuestionsApi
-//        print(apiURL)
-//        APIHandler().getAPIValues(type: QuestionModel.self, apiUrl: apiURL, method: "GET") { result in
-//            switch result {
-//            case .success(let data):
-//                DispatchQueue.main.async {
-//                    self.QuestionTrial1 = data
-//                    let questionIndex = 8
-//                    let question = self.QuestionTrial1?.questions[questionIndex]
-//                    self.quesLabel.text = question?.question
-//                    self.type.text = question?.type
-////                    self.quesContent.text = question?.quesContent
-//                    self.optionButtons[0].setTitle(question?.options[0] ?? "", for: .normal)
-//                    self.optionButtons[1].setTitle(question?.options[1] ?? "", for: .normal)
-//                    self.optionButtons[2].setTitle(question?.options[2] ?? "", for: .normal)
-//                    self.optionButtons[3].setTitle(question?.options[3] ?? "", for: .normal)
-//                }
-//            case .failure(let error):
-//                print(error)
-//                DispatchQueue.main.async {
-//                    let alert = UIAlertController(title: "Warning", message: "Something Went Wrong", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "Ok", style: .destructive) { _ in
-//                        print("API Error")
-//                    })
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//                
-//            }
-//        }
-//    }
-//    
+
     @IBAction func optionButtonTapped(_ sender: UIButton) {
         // Deselect all buttons
         let buttonBackgroundColor = UIColor(
@@ -169,7 +137,7 @@ class ques_9: UIViewController {
             print("Correct Answer: \(correctAnswer)")
         if selectedOption == correctAnswer{
             // Correct option selected
-            task2=task2+1
+            task6=task6+2
             print("Correct option selected.")
         } else {
             // Incorrect option selected

@@ -66,6 +66,7 @@ class ques_8: UIViewController {
                     self.quesLabel.text = question?.question
                     self.type.text = question?.type
                     self.quesContent.text = question?.quesContent
+                    self.optionButtons[0].setTitle(question?.options[0] ?? "", for: .normal)
                     self.optionButtons[1].setTitle(question?.options[1] ?? "", for: .normal)
                     self.optionButtons[2].setTitle(question?.options[2] ?? "", for: .normal)
                     self.optionButtons[3].setTitle(question?.options[3] ?? "", for: .normal)
@@ -114,7 +115,7 @@ class ques_8: UIViewController {
         print("Selected Option: \(selectedOption)")
             print("Correct Answer: \(correctAnswer)")
         if selectedOption == correctAnswer{
-            task5=task5+1
+            task5=task5+3
             // Correct option selected
             print("Correct option selected.")
         } else {

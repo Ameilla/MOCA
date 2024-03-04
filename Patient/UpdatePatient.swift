@@ -6,9 +6,8 @@ struct PatientImageData {
     var mriAfterImage: UIImage?
 }
 
-class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-//    @IBOutlet weak var profile_pic: UIButton!
+class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate  {
+    
     @IBOutlet weak var mri_before: UIImageView!
     @IBOutlet weak var mri_after: UIImageView!
     @IBOutlet weak var hippoTF: UITextField!
@@ -23,58 +22,82 @@ class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINaviga
     @IBOutlet weak var profile_Img: UIImageView!
     
     var id: String?
-    var name, age, gender, ph_no, alter_ph_no, diagnosis, drug, hippo: String?
-    var body = Data()
+    var selectedButtonIndex: Int = 0
+    var selectedImages: [PatientImageData] = []
+    
     let imagePicker = UIImagePickerController()
     
-    var selectedButtonIndex: Int = 0
-    var viewPatient: ViewPateintDetailsModel?
-
-    var selectedImages: [PatientImageData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        GetAPI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        GetAPI()
+    }
+    
+    func setupUI() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         
-        let cornerRadius1 = AddDetailsButton.frame.width * 0.05;        AddDetailsButton.layer.cornerRadius = cornerRadius1
-        AddDetailsButton.layer.borderWidth = 1.0
-        AddDetailsButton.layer.borderColor = UIColor.black.cgColor
+        ageTF.delegate = self
+        phone_noTF.delegate = self
+        alter_ph_noTF.delegate = self
         
-        GetAPI()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
         
         profile_Img.addAction(for: .tap) {
             self.presentImagePicker(forIndex: 0)
         }
+        
         mri_before.addAction(for: .tap) {
             self.presentImagePicker(forIndex: 1)
         }
+        
         mri_after.addAction(for: .tap) {
             self.presentImagePicker(forIndex: 2)
         }
         
+        // Check if images are already set, and if not, add "Upload Image" label
+        if profile_Img.image == nil {
+            addUploadImageLabel(to: profile_Img, showText: true)
+        }
         
+        if mri_before.image == nil {
+            addUploadImageLabel(to: mri_before, showText: true)
+        }
+        
+        if mri_after.image == nil {
+            addUploadImageLabel(to: mri_after, showText: true)
+        }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        GetAPI()
-    }
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-
-//    @IBAction func selectimage1(_ sender: Any) {
-//        presentImagePicker(forIndex: 0)
-//    }
-
-//    @IBAction func selectimage2(_ sender: Any) {
-//        presentImagePicker(forIndex: 1)
-//    }
-//
-//    @IBAction func selectimage3(_ sender: Any) {
-//        presentImagePicker(forIndex: 2)
-//    }
-
+   
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == ageTF {
+            let allowedCharacterSet = CharacterSet.decimalDigits
+            let enteredCharacterSet = CharacterSet(charactersIn: string)
+            return allowedCharacterSet.isSuperset(of: enteredCharacterSet)
+        } else if textField == phone_noTF || textField == alter_ph_noTF {
+            // Allow only numeric characters and limit the length to 10 digits
+            let numericCharacterSet = CharacterSet.decimalDigits
+            let enteredCharacterSet = CharacterSet(charactersIn: string)
+            let isNumeric = numericCharacterSet.isSuperset(of: enteredCharacterSet)
+            let currentText = textField.text ?? ""
+            let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+            let isValidLength = newText.count <= 10
+            
+            return isNumeric && isValidLength
+        }
+        return true
+    }
+    
     func presentImagePicker(forIndex index: Int) {
         selectedButtonIndex = index
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
@@ -87,7 +110,7 @@ class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINaviga
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-
+    
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePicker.sourceType = .camera
@@ -96,85 +119,108 @@ class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINaviga
             print("Camera not available")
         }
     }
-
+    
     func openGallery() {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             updateSelectedImages(with: pickedImage)
         }
-
         picker.dismiss(animated: true, completion: nil)
     }
-
-    func updateSelectedImages(with image: UIImage) {
+    
+    func updateSelectedImages(with image: UIImage?) {
         var imageData = PatientImageData()
-
         switch selectedButtonIndex {
         case 0:
             imageData.patientImage = image
-            profile_Img.image = image //UIImage(named: "\(image)")
+            profile_Img.image = image
+            if let image = image {
+                profile_Img.subviews.forEach { $0.removeFromSuperview() }
+            } else {
+                addUploadImageLabel(to: profile_Img, showText: true)
+            }
         case 1:
             imageData.mriBeforeImage = image
             mri_before.image = image
-//            mri_before.setImage(image, for: .normal)
-
+            if let image = image {
+                mri_before.subviews.forEach { $0.removeFromSuperview() }
+            } else {
+                addUploadImageLabel(to: mri_before, showText: true)
+            }
         case 2:
             imageData.mriAfterImage = image
             mri_after.image = image
-//            mri_after.setImage(image, for: .normal)
+            if let image = image {
+                mri_after.subviews.forEach { $0.removeFromSuperview() }
+            } else {
+                addUploadImageLabel(to: mri_after, showText: true)
+            }
         default:
             break
         }
-
         // Ensure the selectedImages array has enough elements
         while selectedImages.count <= selectedButtonIndex {
             selectedImages.append(PatientImageData())
         }
-
         // Update the selected image data in the array
         selectedImages[selectedButtonIndex] = imageData
     }
 
+    
+    func addUploadImageLabel(to imageView: UIImageView, showText: Bool) {
+        // Remove any existing labels
+        imageView.subviews.forEach { $0.removeFromSuperview() }
+        
+        // Check if the image is nil and showText is true, if so, set the "Upload Image" text
+        if showText {
+            // Set "Upload Image" text
+            let uploadImageLabel = UILabel(frame: imageView.bounds)
+            uploadImageLabel.text = "Upload Image"
+            uploadImageLabel.textAlignment = .center
+            uploadImageLabel.textColor = UIColor.lightGray
+            
+            // Add label to the front
+            imageView.addSubview(uploadImageLabel)
+            imageView.bringSubviewToFront(uploadImageLabel)
+        }
+    }
 
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func backBtn(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     @IBAction func UpdatePatientbtn(_ sender: Any) {
+        
         GettAPI()
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "ViewPatientDetails") as! ViewPatientDetails
-        vc.id = id
+        vc.id=id
         self.navigationController?.pushViewController(vc, animated: true)
+        
     }
-
+    
     func GetAPI() {
         let apiURL = APIList.ViewPatientApi
         print(apiURL)
-
         // Prepare POST parameters if needed
         let parameters: [String: String] = [
             "num" : id ?? "262"
-            
-            // "key1": value1,
-            // "key2": value2,
         ]
         APIHandler().postAPIValues(type: ViewPateintDetailsModel.self, apiUrl: apiURL, method: "POST", formData: parameters) { result in
             switch result {
             case .success(let data):
-                self.viewPatient = data
-                print(data)
                 DispatchQueue.main.async { [self] in
-                    if let patientData = self.viewPatient?.data?.first {
-                        self.nameTF.text=patientData.name
+                    if let patientData = data.data?.first {
+                        self.nameTF.text = patientData.name
                         self.ageTF.text = patientData.age
                         self.genderTF.text = patientData.gender
                         self.phone_noTF.text = patientData.phoneNumber
@@ -185,8 +231,11 @@ class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINaviga
                         self.profile_Img.image = getImage(from: patientData.patientImg)
                         self.mri_before.image = getImage(from: patientData.mriBefore)
                         self.mri_after.image = getImage(from: patientData.mriAfter)
-//                        self.setButtonImage(self.mri_before, withImageData: patientData.mriBefore)
-//                        self.setButtonImage(self.mri_after, withImageData: patientData.mriAfter)
+
+                        // Check if images are empty and show "Upload Image" text if needed
+                        addUploadImageLabel(to: profile_Img, showText: self.profile_Img.image == nil)
+                        addUploadImageLabel(to: mri_before, showText: self.mri_before.image == nil)
+                        addUploadImageLabel(to: mri_after, showText: self.mri_after.image == nil)
                     }
                 }
             case .failure(let error):
@@ -201,43 +250,14 @@ class UpdatePatient: UIViewController, UIImagePickerControllerDelegate, UINaviga
             }
         }
     }
+
+
+    
     func getImage(from imageDataString: String?) -> UIImage? {
         guard let imageDataString = imageDataString, let imageData = Data(base64Encoded: imageDataString) else {
             return nil
         }
         return UIImage(data: imageData)
-    }
-    func setButtonImage(_ button: UIButton, withImageData imageDataString: String) {
-        guard !imageDataString.isEmpty, let imageData = Data(base64Encoded: imageDataString) else {
-            // If imageDataString is empty or cannot be decoded, no action needed
-            return
-        }
-
-        // Resize the image if needed
-        if let resizedImage = resizeImage(UIImage(data: imageData)!, targetSize: CGSize(width: 150, height: 150)) {
-            button.setImage(resizedImage, for: .normal)
-            button.imageView?.contentMode = .scaleAspectFill
-        } else {
-            print("Error resizing image.")
-        }
-    }
-
-    func resizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage? {
-        let size = image.size
-        let widthRatio = targetSize.width / size.width
-        let heightRatio = targetSize.height / size.height
-        var newSize: CGSize
-        if widthRatio > heightRatio {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
-        }
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
     }
 }
 

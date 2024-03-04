@@ -31,8 +31,6 @@ class ques_4: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(id ?? "")
-        
-        
         bor.layer.cornerRadius = 25
         bor.layer.masksToBounds=true
         nextbar.layer.cornerRadius = 17
@@ -40,29 +38,20 @@ class ques_4: UIViewController {
         option2.layer.cornerRadius = 10
         option3.layer.cornerRadius = 10
         option1.layer.cornerRadius = 10
-        
         option1.layer.borderWidth = 1.0
         option2.layer.borderWidth = 1.0
         option3.layer.borderWidth = 1.0
         option4.layer.borderWidth = 1.0
         submitButtonTapped.layer.cornerRadius = 10
         GetAPI()
-
-       
     }
-    
-    
     func GetAPI() {
         let apiURL = APIList.Question4Api
         print(apiURL)
-        
         // Prepare POST parameters if needed
         let parameters: [String: Any] = [:
-            // Add your POST parameters here if required
-            // "key1": value1,
-            // "key2": value2,
+            
         ]
-
         APIHandler().postAPIValues(type: Question4Model.self, apiUrl: apiURL, method: "POST", formData: parameters) { result in
             switch result {
             case .success(let data):
@@ -99,46 +88,6 @@ class ques_4: UIViewController {
             }
         }
     }
-
-//    func GetAPI() {
-//        let apiURL = APIList.Question4Api
-//        print(apiURL)
-//        
-//        APIHandler().getAPIValues(type: Question4Model.self, apiUrl: apiURL, method: "GET") { result in
-//            switch result {
-//            case .success(let data):
-//                self.Question = data
-////                print(data)
-//                if let QuesionData = self.Question?.data.first,
-//                   let imageDataString = QuesionData.quesContent,
-//                   let imageData = Data(base64Encoded: imageDataString),
-//                   let image = UIImage(data: imageData) {
-//                    DispatchQueue.main.async {
-//                        self.quesLabel.text = QuesionData.ques
-//                        self.type.text = QuesionData.type
-//                        self.optionButtons[0].setTitle(QuesionData.option1, for: .normal)
-//                        self.optionButtons[1].setTitle(QuesionData.option2, for: .normal)
-//                        self.optionButtons[2].setTitle(QuesionData.option3, for: .normal)
-//                        self.optionButtons[3].setTitle(QuesionData.option4, for: .normal)
-//                        self.image_content.image = image
-//                        self.image_content?.contentMode = .scaleAspectFit
-//                           self.image_content?.clipsToBounds = true
-//                    }
-//                } else {
-//                    print("Error loading image.")
-//                }
-//            case .failure(let error):
-//                print(error)
-//                DispatchQueue.main.async {
-//                    let alert = UIAlertController(title: "Warning", message: "Something Went Wrong", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "Ok", style: .destructive) { _ in
-//                        print("API Error")
-//                    })
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//    }
     @IBAction func optionButtonTapped(_ sender: UIButton) {
         // Deselect all buttons
         let buttonBackgroundColor = UIColor(
@@ -150,9 +99,8 @@ class ques_4: UIViewController {
         for button in optionButtons {
             button.isSelected = false
             button.backgroundColor = buttonBackgroundColor
-            button.setTitleColor(.black, for: .normal) // Set text color to black for better visibility
-//            button.layer.cornerRadius = 10
-//            button.clipsToBounds = true
+            button.setTitleColor(.black, for: .normal) // Set text color to
+
         }
         // Select the tapped button
         sender.isSelected = true
@@ -170,7 +118,7 @@ class ques_4: UIViewController {
             print("Correct Answer: \(correctAnswer)")
         if selectedOption == correctAnswer{
             // Correct option selected
-            task2=task2+1
+            task2=task2+3
             print("Correct option selected.")
         } else {
             // Incorrect option selected

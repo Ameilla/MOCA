@@ -2,7 +2,7 @@ import UIKit
 
 class ViewPatientDetails: UIViewController {
     
-    @IBOutlet weak var mri: UIButton!
+    
     @IBOutlet weak var mri_before: UIImageView!
     @IBOutlet weak var mri_after: UIImageView!
     @IBOutlet weak var profile_image: UIImageView!
@@ -23,7 +23,7 @@ class ViewPatientDetails: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        PostAPI()
+//        PostAPI()
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mriViewTapped))
             mri_before.isUserInteractionEnabled = true
@@ -33,12 +33,11 @@ class ViewPatientDetails: UIViewController {
             mri_after.isUserInteractionEnabled = true
             mri_after.addGestureRecognizer(GestureRecognizer)
         
-        
-        
     }
     override func viewWillAppear(_ animated: Bool) {
-        PostAPI()
-    }
+            super.viewWillAppear(animated)
+            PostAPI()
+        }
 
     @objc func mriViewTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -62,12 +61,14 @@ class ViewPatientDetails: UIViewController {
     }
     
     @IBAction func backBtn(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyBoard.instantiateViewController(withIdentifier: "Patient_info") as! Patient_info
-//        vc.id=id
-//        self.navigationController?.pushViewController(vc, animated: true)
-    }   
+//        navigationController?.popViewController(animated: true)
+        for controller in self.navigationController!.viewControllers as Array {
+            if controller.isKind(of: Patient_info.self) {
+                self.navigationController!.popToViewController(controller, animated: true)
+                break
+            }
+        }
+    }
     
     
     @IBAction func deleteBtn(_ sender: Any) {
@@ -102,7 +103,7 @@ class ViewPatientDetails: UIViewController {
             switch result {
             case .success(let data):
                 self.viewPatient = data
-                print(data)
+//                print(data)
                 DispatchQueue.main.async {
                     if let patientData = self.viewPatient?.data?.first {
                         self.NameLabel.text = patientData.name

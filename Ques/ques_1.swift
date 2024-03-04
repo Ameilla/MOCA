@@ -117,40 +117,6 @@ class ques_1: UIViewController {
         }
     }
 
-    
-    
-    
-    
-//    func GetAPI() {
-//        let apiURL = APIList.QuestionsApi
-//        
-//        APIHandler().getAPIValues(type: QuestionModel.self, apiUrl: apiURL, method: "GET") { result in
-//            switch result {
-//            case .success(let data):
-//                DispatchQueue.main.async {
-//                    self.QuestionTrial1 = data
-//                    let questionIndex = 0
-//                    let question = self.QuestionTrial1?.questions[questionIndex]
-//                    self.quesLabel.text = question?.question
-//                    self.optionButtons[0].setTitle(question?.options[0] ?? "", for: .normal)
-//                    self.optionButtons[1].setTitle(question?.options[1] ?? "", for: .normal)
-//                    self.optionButtons[2].setTitle(question?.options[2] ?? "", for: .normal)
-//                    self.optionButtons[3].setTitle(question?.options[3] ?? "", for: .normal)
-//                    self.type.text = question?.type
-//                }
-//            case .failure(let error):
-//                print(error)
-//                DispatchQueue.main.async {
-//                    let alert = UIAlertController(title: "Warning", message: "Something Went Wrong", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "Ok", style: .destructive) { _ in
-//                        print("API Error")
-//                    })
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//                
-//            }
-//            
-//        }
     @IBAction func optionButtonTapped(_ sender: UIButton) {
         // Deselect all buttons
         
@@ -165,9 +131,7 @@ class ques_1: UIViewController {
         for button in optionButtons {
             button.isSelected = false
             button.backgroundColor = buttonBackgroundColor
-            button.setTitleColor(.black, for: .normal) // Set text color to black for better visibility
-//            button.layer.cornerRadius = 10 
-//            button.clipsToBounds = true
+            button.setTitleColor(.black, for: .normal)
         }
         // Select the tapped button
         sender.isSelected = true
@@ -186,7 +150,7 @@ class ques_1: UIViewController {
             print("Correct Answer: \(correctAnswer)")
         if selectedOption == correctAnswer{
             // Correct option selected
-            task1=task1+1
+            task1=task1+5
             print("Correct option selected.")
         } else {
             // Incorrect option selected

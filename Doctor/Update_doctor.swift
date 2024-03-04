@@ -37,7 +37,13 @@ class Update_doctor: UIViewController,UIImagePickerControllerDelegate, UINavigat
     }
 
     @IBAction func back(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        for controller in self.navigationController!.viewControllers as Array {
+            if controller.isKind(of: Doctor_Profile.self) {
+                self.navigationController!.popToViewController(controller, animated: true)
+                break
+            }
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         PostAPI()

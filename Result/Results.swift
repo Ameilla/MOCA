@@ -42,23 +42,31 @@ class Results: UIViewController {
         image1.image = img
         image2.image=image
         // Update labels with task results
+        print(task1)
+        print(task2)
+        print(task3)
+        print(task4)
+        print(task5)
+        print(task6)
+        print(task7)
+        print(result)
         task1Label.text = "\(task1)"
         task2Label.text = "\(task2)"
         task3Label.text = "\(task3)"
         task4Label.text = "\(task4)"
-        task5Label.text = "\(task5)"
-        task6Label.text = "\(task6)"
+        task5Label.text = "\(task6)"
+        task6Label.text = "\(task5)"
         task7Label.text = "\(task7)"
         resultLabel.text="\(result)"
         let number = result
-        if number >= 7 && number <= 8 {
+        if number >= 26 && number <= 30 {
             interpretation.text="Normal Cognitive"
         } 
-        else if number >= 5 && number <= 6
+        else if number >= 18 && number <= 25
         {
             interpretation.text="Mild Cognitive impairment"
         }
-        else if number >= 3 && number <= 4
+        else if number >= 10 && number <= 17
         {
             interpretation.text="Moderate Cognitive impairment"
         }

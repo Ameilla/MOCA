@@ -48,16 +48,16 @@ public class Constants {
 
 
 struct APIList{
-//    static var ipAddress = "http://192.168.1.5//API/MOCA_AME/"
+
     
    
-//   static var ipAddress = "http://172.18.24.241//"
+
     
     static var ipAddress = "http://localhost/MOCA_AME/"
-//    static var ipAddress = "http://172.18.76.82/MOCA_AME/"
+//    static var ipAddress = "http://172.18.29.148/MOCA_AME/"
     
     
-//  static var ipAddress = "http://192.168.207.246//MOCA_AME/"
+
     
     static var LogInURL = ipAddress+"login.php"
     
@@ -91,6 +91,11 @@ struct APIList{
     static var ViewResultApi = ipAddress+"view_result.php?id="
     static var GraphApi = ipAddress+"bar.php?id="
     static var AddCommentApi = ipAddress+"description.php?id="
+    
+    static var t_QuestionsApi = ipAddress+"t_Question_final.php"
+    static var t_Question4Api = ipAddress+"t_Ques_4_final.php"
+    static var t_Question5Api = ipAddress+"t_Ques_5_final.php"
+    static var t_Question9Api = ipAddress+"t_Ques_9_final.php"
     
 }
 

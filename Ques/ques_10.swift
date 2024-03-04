@@ -120,7 +120,7 @@ class ques_10: UIViewController {
         print("Selected Option: \(selectedOption)")
             print("Correct Answer: \(correctAnswer)")
         if selectedOption == correctAnswer{
-            task7=task7+1
+            task7=task7+6
             // Correct option selected
             print("Correct option selected.")
         } else {

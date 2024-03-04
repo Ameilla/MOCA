@@ -19,7 +19,6 @@ class ques_2_draw: UIViewController {
         super.viewDidAppear(animated)
         setupCanvas()
     }
-
     private func setupCanvas() {
         // Create an individual PKToolPicker instance
         toolPicker = PKToolPicker()

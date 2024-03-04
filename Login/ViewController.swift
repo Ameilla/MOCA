@@ -3,7 +3,7 @@
 
 import UIKit
 class LoginPageViewController: UIViewController {
-
+    
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     
@@ -14,18 +14,22 @@ class LoginPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-                self.view.addGestureRecognizer(tapGesture)
+        self.view.addGestureRecognizer(tapGesture)
     }
+    
     @objc func dismissKeyboard() {
-            view.endEditing(true)
-        }
+        view.endEditing(true)
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
+    
     @IBAction func onlogin(_ sender: Any) {
-//        apiURL = "http://172.17.62.89/API/doctor_validate.php?email=\(emailTF.text ?? "")&password=\(passwordTF.text ?? "")"
-        func isValidEmail(_ email: String) -> Bool {
-            let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-            let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-            return emailPredicate.evaluate(with: email)
-        }
+        //        apiURL = "http://172.17.62.89/API/doctor_validate.php?email=\(emailTF.text ?? "")&password=\(passwordTF.text ?? "")"
+        
         if let enteredEmail = emailTF.text, enteredEmail.isEmpty {
             let alert = UIAlertController(title: "Alert", message: "Email field is empty", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -72,44 +76,17 @@ class LoginPageViewController: UIViewController {
             }
         }
     }
-
-
+    
+    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
-
+    
     func navigateToDashboard() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homePageVC = storyboard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
         navigationController?.pushViewController(homePageVC, animated: true)
     }
-//    func getLoginAPI() {
-//        APIHandler().getAPIValues(type: LoginModel.self, apiUrl: apiURL, method: "GET") { result in
-//            switch result {
-//            case .success(let data):
-//                self.login = data
-//                print(self.login ?? "")
-//                DispatchQueue.main.async {
-//                    if self.emailTF.text != self.login.data?.doctorEmail && self.passwordTF.text != self.login.data?.doctorPassword {
-//                        let alert = UIAlertController(title: "Alert", message: "Incorrect Email or Password", preferredStyle: UIAlertController.Style.alert)
-//                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-//                        self.present(alert, animated: true)
-//                    } else {
-//                        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-//                        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-//                        self.navigationController?.pushViewController(vc, animated: true)
-//                        
-//                        self.emailTF.resignFirstResponder()
-//                                   self.passwordTF.resignFirstResponder()
-//                    }
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
-    
 }
-

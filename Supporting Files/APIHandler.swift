@@ -15,48 +15,47 @@ class APIHandler {
     init() {}
     
     func getAPIValues<T:Codable>(type: T.Type, apiUrl: String, method: String, onCompletion: @escaping (Result<T, Error>) -> Void) {
-                
+        
         guard let url = URL(string: apiUrl) else {
-                    let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
-                    onCompletion(.failure(error))
-                    return
-                }
-                
-                var request = URLRequest(url: url)
-                request.httpMethod = "GET"
-                                
-                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let error = error {
-                        onCompletion(.failure(error))
-                        return
-                    }
-                    
-                    guard let data = data else {
-                        let error = NSError(domain: "No data received", code: 1, userInfo: nil)
-                        onCompletion(.failure(error))
-                        return
-                    }
-                    
-                    do {
-                        let decodedData = try JSONDecoder().decode(type, from: data)
-                        onCompletion(.success(decodedData))
-                        //print(decodedData)
-                    } catch {
-                        onCompletion(.failure(error))
-                    }
-                }
-                
-                task.resume()
+            let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
+            onCompletion(.failure(error))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                onCompletion(.failure(error))
+                return
             }
+            
+            guard let data = data else {
+                let error = NSError(domain: "No data received", code: 1, userInfo: nil)
+                onCompletion(.failure(error))
+                return
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(type, from: data)
+                onCompletion(.success(decodedData))
+                //print(decodedData)
+            } catch {
+                onCompletion(.failure(error))
+            }
+        }
+        
+        task.resume()
+    }
     
     func postAPIValues<T: Codable>(
         type: T.Type,
         apiUrl: String,
         method: String,
         formData: [String: Any], // Dictionary for form data parameters
-        onCompletion: @escaping (Result<T, Error>) -> Void
-    ) {
-        guard let url = URL(string: apiUrl) else {
+        onCompletion: @escaping (Result<T, Error>) -> Void) {
+            guard let url = URL(string: apiUrl) else {
             let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
             onCompletion(.failure(error))
             return
@@ -93,7 +92,7 @@ class APIHandler {
             do {
                 let decodedData = try JSONDecoder().decode(type, from: data)
                 onCompletion(.success(decodedData))
-               // print(decodedData)
+                // print(decodedData)
             } catch {
                 onCompletion(.failure(error))
             }

@@ -34,10 +34,13 @@ class All_Profiles: UIViewController{
         }
 
     @IBAction func back(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-//        let storyBoard: UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyBoard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
-//        self.navigationController?.pushViewController(vc, animated: true)
+//        navigationController?.popViewController(animated: true)
+        for controller in self.navigationController!.viewControllers as Array {
+        if controller.isKind(of: Dashboard.self) {
+            self.navigationController!.popToViewController(controller, animated: true)
+            break
+        }
+    }
     }
     override func viewWillAppear(_ animated: Bool) {
         getDashAPI()
@@ -77,8 +80,8 @@ class All_Profiles: UIViewController{
             case .success(let data):
                 DispatchQueue.main.async {
                 self.dashboard = data
-                print(self.dashboard?.data ?? "")
-                    print("Dashboard Data: \(self.dashboard.data ?? [])")
+//                print(self.dashboard?.data ?? "")
+//                    print("Dashboard Data: \(self.dashboard.data ?? [])")
                     self.tbs.reloadData()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                 // Stop loading animation
