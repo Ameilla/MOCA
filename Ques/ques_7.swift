@@ -15,6 +15,7 @@ class ques_7: UIViewController {
     @IBOutlet weak var option2: UIButton!
     @IBOutlet weak var option3: UIButton!
     @IBOutlet weak var option4: UIButton!
+    @IBOutlet weak var Background: UIImageView!
     var id: String?
     var task1=0
     var task2=0
@@ -36,6 +37,7 @@ class ques_7: UIViewController {
         super.viewDidLoad()
         print(id ?? "")
         
+        Background.alpha = 0.1
         bar.layer.cornerRadius = 25
         bar.layer.masksToBounds=true
         nextbar.layer.cornerRadius = 17

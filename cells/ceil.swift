@@ -14,6 +14,7 @@ class ceil: UITableViewCell {
     @IBOutlet weak var box: UIView!
     @IBOutlet weak var patientImg : UIImageView!
     @IBOutlet weak var age: UILabel!
+    @IBOutlet weak var diagnosis: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

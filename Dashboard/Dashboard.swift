@@ -140,13 +140,15 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         let data = searching ? filtered[indexPath.row] : dashboard?.data?[indexPath.row]
         cell.lbl.text = data?.name
         cell.age.text = data?.age
+        cell.diagnosis.text = data?.diagnosis
         id = data?.id
         if let imageDataString = data?.patientImg,
             let imageData = Data(base64Encoded: imageDataString),
             let image = UIImage(data: imageData) {
             cell.patientImg?.image = image
-            cell.patientImg?.contentMode = .scaleAspectFit
+            cell.patientImg?.contentMode = .scaleToFill
             cell.patientImg?.clipsToBounds = true
+            cell.patientImg?.layer.cornerRadius = cell.patientImg.frame.height / 2
         }
         return cell
     }

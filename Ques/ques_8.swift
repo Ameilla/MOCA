@@ -10,6 +10,7 @@ import UIKit
 class ques_8: UIViewController {
     @IBOutlet weak var bar: UIView!
     @IBOutlet weak var nextbar: UIView!
+    @IBOutlet weak var background: UIImageView!
     @IBOutlet weak var submitButtonTapped: UIButton!
     @IBOutlet weak var option1: UIButton!
     @IBOutlet weak var option2: UIButton!
@@ -36,6 +37,7 @@ class ques_8: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        background.alpha = 0.1
         bar.layer.cornerRadius = 25
         bar.layer.masksToBounds=true
         nextbar.layer.cornerRadius = 17

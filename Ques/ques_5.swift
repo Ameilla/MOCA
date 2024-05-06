@@ -45,11 +45,9 @@ class ques_5: UIViewController {
         let apiURL = APIList.Question5Api
         print(apiURL)
         
-        // Prepare POST parameters if needed
+        
         let parameters: [String: Any] = [:
-            // Add your POST parameters here if required
-            // "key1": value1,
-            // "key2": value2,
+            
         ]
 
         APIHandler().postAPIValues(type: Question5Model.self, apiUrl: apiURL, method: "POST", formData: parameters) { result in
@@ -94,13 +92,13 @@ class ques_5: UIViewController {
               let originalImage = UIImage(data: imageData) else {
             return
         }
-
+        
         // Resize the image to fit the button's bounds
         let resizedImage = resizeImage(originalImage, targetSize: button.bounds.size)
-
+        
         // Set the resized image to the button
         button.setImage(resizedImage, for: .normal)
-
+        
         // Update the content mode of the button's image view
         button.imageView?.contentMode = .scaleAspectFill
     }
@@ -136,7 +134,7 @@ class ques_5: UIViewController {
         }
         // Select the tapped button
         sender.isSelected = true
-        sender.backgroundColor = .green
+        sender.backgroundColor = .lightGray
 
         // Store the selected option
         selectedOption = String(sender.tag)

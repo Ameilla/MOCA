@@ -9,6 +9,8 @@ class LoginPageViewController: UIViewController {
     
     @IBOutlet weak var loginbtn: UIButton!
     
+    @IBOutlet weak var onshow: UIButton!
+    var isPasswordVisible = false
     var apiURL = String()
     var login: LoginModel!
     override func viewDidLoad() {
@@ -28,7 +30,7 @@ class LoginPageViewController: UIViewController {
     }
     
     @IBAction func onlogin(_ sender: Any) {
-        //        apiURL = "http://172.17.62.89/API/doctor_validate.php?email=\(emailTF.text ?? "")&password=\(passwordTF.text ?? "")"
+        
         
         if let enteredEmail = emailTF.text, enteredEmail.isEmpty {
             let alert = UIAlertController(title: "Alert", message: "Email field is empty", preferredStyle: .alert)
@@ -70,7 +72,7 @@ class LoginPageViewController: UIViewController {
                     }
                 case .failure(let error):
                     print(error)
-                    // Handle the failure case, show an alert or log the error
+                   
                     self.showAlert(title: "Error", message: "Something went wrong. Please try again.")
                 }
             }
@@ -89,4 +91,10 @@ class LoginPageViewController: UIViewController {
         let homePageVC = storyboard.instantiateViewController(withIdentifier: "Dashboard") as! Dashboard
         navigationController?.pushViewController(homePageVC, animated: true)
     }
-}
+    @IBAction func showpassword(_ sender: Any) {
+        isPasswordVisible.toggle()
+               passwordTF.isSecureTextEntry = !isPasswordVisible
+               let image = isPasswordVisible ? UIImage(systemName: "eye.fill") : UIImage(systemName: "eye.slash.fill")
+               onshow.setImage(image, for: .normal)
+           }
+    }

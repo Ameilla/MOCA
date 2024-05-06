@@ -71,9 +71,7 @@ class Patient_info: UIViewController {
         // Prepare POST parameters if needed
         let parameters: [String: Any] = [
             "num":id ?? "262"
-            // Add your POST parame62ters here if required
-            // "key1": value1,
-            // "key2": value2,
+            
         ]
         
         APIHandler().postAPIValues(type: PatientInfoModel.self, apiUrl: apiURL, method: "POST", formData: parameters) { result in
@@ -95,8 +93,10 @@ class Patient_info: UIViewController {
                            let image = UIImage(data: imageData) {
                             DispatchQueue.main.async {
                                 self.profile_image.image = image
-                                self.profile_image.contentMode = .scaleAspectFit
+                                self.profile_image.contentMode = .scaleToFill
                                 self.profile_image?.clipsToBounds = true
+                                self.profile_image.layer.cornerRadius = self.profile_image.frame.height / 2
+                                
                             }
                         } else {
                             print("Error decoding image data")

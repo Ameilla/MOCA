@@ -23,7 +23,7 @@ class ViewPatientDetails: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        PostAPI()
+        GetAPI()
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mriViewTapped))
             mri_before.isUserInteractionEnabled = true
@@ -36,7 +36,7 @@ class ViewPatientDetails: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
-            PostAPI()
+            GetAPI()
         }
 
     @objc func mriViewTapped() {
@@ -83,22 +83,17 @@ class ViewPatientDetails: UIViewController {
     @IBAction func updateBtn(_ sender: Any) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "UpdatePatient") as! UpdatePatient
-        vc.id=id
         self.navigationController?.pushViewController(vc, animated: true)
+        vc.id=id
     }
-    
-    func PostAPI() {
+    func GetAPI() {
         let apiURL = APIList.ViewPatientApi
         print(apiURL)
-
         // Prepare POST parameters if needed
         let parameters: [String: Any] = [
             "num": id ?? "262"
-            // Add your POST parameters here if required
-            // "key1": value1,
-            // "key2": value2,
+            
         ]
-
         APIHandler().postAPIValues(type: ViewPateintDetailsModel.self, apiUrl: apiURL, method: "POST", formData: parameters) { result in
             switch result {
             case .success(let data):
@@ -122,6 +117,9 @@ class ViewPatientDetails: UIViewController {
                            let image = UIImage(data: imageData) {
                             DispatchQueue.main.async {
                                 self.profile_image.image = image
+                                self.profile_image.contentMode = .scaleToFill
+                                self.profile_image?.clipsToBounds = true
+                                self.profile_image.layer.cornerRadius = self.profile_image.frame.height / 2
                             }
                         } else {
                             print("Error decoding image data")

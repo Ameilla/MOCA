@@ -92,6 +92,7 @@ extension AllResults: UITableViewDelegate, UITableViewDataSource {
             cell.task5.text = viewresult.task5
             cell.task6.text = viewresult.task6
             cell.task7.text = viewresult.task7
+            cell.result.text = viewresult.result
             cell.interpretation.text = viewresult.interpretation
             cell.Date.text = "Date: \(viewresult.submissionDate)"
 

@@ -54,7 +54,7 @@ struct APIList{
 
     
     static var ipAddress = "http://localhost/MOCA_AME/"
-//    static var ipAddress = "http://172.18.29.148/MOCA_AME/"
+//    static var ipAddress = "http://192.168.1.24/MOCA_AME/"
     
     
 

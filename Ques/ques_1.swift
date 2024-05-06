@@ -117,6 +117,9 @@ class ques_1: UIViewController {
         }
     }
 
+    @IBAction func Back(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     @IBAction func optionButtonTapped(_ sender: UIButton) {
         // Deselect all buttons
         
